@@ -38,6 +38,7 @@ Bash script for initial scans on HTB Machine
 * Service scan on full TCP scan result
 * Gobuster / dirb if Webserver Found (only on p 80 from now)
 * Can replay without full rescan (check if files exist) 
+
 ![Replay](https://github.com/ITPPA/ScanHTB/raw/master/assets/scanhtb-exist.png)
 
 ## Install
@@ -53,7 +54,8 @@ $ mkdir box && cd box/
 > run script 
 ```sh
 $ /path/to/script/scanhtb.sh <LAST DIGIT HTB BOX IP>
-$ /path/to/script/scanhtb.sh 10
+# Exemple pour Arctic box (10.10.10.11)
+$ /path/to/script/scanhtb.sh 11
 ```
 
 ## Usage
