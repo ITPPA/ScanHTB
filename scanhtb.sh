@@ -9,6 +9,7 @@
 # Script Name   : scanhtb.sh
 # Description   : HTB VM PreEnum
 # Author        : ITPPA (https://github.com/ITPPA)
+# Licence       : GNU General Public License v3.0
 # 
 ###################################################
 
@@ -217,5 +218,5 @@ fi
 info "Cleanup Files"
 #rm scans/full.nmap
 
-#todo : put all in one file
+# TODO : put all in one file
 result "Script End, Happy Hacking"
