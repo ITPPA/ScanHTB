@@ -6,9 +6,9 @@
 
 ###################################################
 #
-# Script Name	: scanhtb.sh
-# Description	: HTB VM PreEnum
-# Author		: ITPPA (https://github.com/ITPPA)
+# Script Name   : scanhtb.sh
+# Description   : HTB VM PreEnum
+# Author        : ITPPA (https://github.com/ITPPA)
 # 
 ###################################################
 
@@ -19,8 +19,6 @@ YELLOW=`tput setaf 3`
 BLUE='\e[94m'
 CYAN='\e[36m'
 RST=`tput sgr0`
-
-
 
 # Print functions
 function error {

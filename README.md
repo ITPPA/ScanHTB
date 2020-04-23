@@ -1,8 +1,10 @@
 # ScanHTB
 
+Bash script for initial scans on HTB Machine
+
 ![Example](https://github.com/ITPPA/ScanHTB/raw/master/assets/scanhtb-full1.png)
 
-Bash script for initial scans on HTB Machine
+
 
 | Chapters                                     | Description                                             |
 |----------------------------------------------|---------------------------------------------------------|
@@ -12,21 +14,21 @@ Bash script for initial scans on HTB Machine
 | [Install](#Install)                          | How to Install						                     |
 | [Acknowledgments](#acknowledgments)          | Kudos to these people                                   |
 
-### Requirement
+## Requirement
 
 * Bash !!!
 * Nmap
 * [Gobuster](https://github.com/OJ/gobuster)
 * [Dirb](https://tools.kali.org/web-applications/dirb)
 
-### Features
+## Features
 
 * Full TCP / UDP scan
 * Service scan on full TCP scan result
 * Gobuster / dirb if Webserver Found (only on p 80 from now)
 * Can replay without full rescan (check if files exist)
 
-### Install
+## Install
 
 > Download script
 ```sh
@@ -38,7 +40,7 @@ $ mkdir box && cd box/
 ```
 > run script 
 ```sh
-$ /path/to/script/scanhtb.sh <LAST DIGIT HTB BOX>
+$ /path/to/script/scanhtb.sh <LAST DIGIT HTB BOX IP>
 $ /path/to/script/scanhtb.sh 10
 ```
 
@@ -78,5 +80,5 @@ First Release
 ### Acknowledgments
 
 This script was made based on calebstewart init-machine script 
-* [calebstewart](https://github.com/calebstewart/init-machine) - Thank's
+* [calebstewart init-machine](https://github.com/calebstewart/init-machine) - Thank's
 
