@@ -114,7 +114,7 @@ if [ -e scans/full.nmap ]; then
 	    case $REPLY in
 	        1|y)
 				command "nmap -p- --min-rate=1000 -Pn -T4 $IP -oN scans/full.nmap"
-				wait "Full Scan proceded"
+				wait "Full Scan proceeded"
 				nmap -p- --min-rate=1000 -Pn -T4 $IP -oN scans/full.nmap 1>/dev/null
 				break
 				;;
@@ -125,7 +125,7 @@ if [ -e scans/full.nmap ]; then
 	done
 else
 	command "nmap -p- --min-rate=1000 -Pn -T4 $IP -oN scans/full.nmap"
-	wait "Full Scan proceded"
+	wait "Full Scan proceeded"
 	nmap -p- --min-rate=1000 -Pn -T4 $IP -oN scans/full.nmap 1>/dev/null
 fi
 result "Full TCP Scan Saved in .scans/full.nmap"
@@ -181,7 +181,7 @@ if [[ $ports =~ $HTTP_REGEX ]] || [ $ports = "80" ]; then
 	result "Find Port 80 Open, scan?"
 	select CHOIX in "${LISTE[@]}" ; do
 	    case $REPLY in
-	        1|y|*)
+	        1|y)
 			select scanner in Gobuster Dirb ; do
 				case $scanner in
 					Gobuster)
