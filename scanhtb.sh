@@ -48,7 +48,7 @@ function print_usage {
 	cat <<EOF
 Usage: $0 ip [OPTION]...
 
-Initialize a new Hack the Box machine directory structure and perform initial scans.
+Perform initial scans on a Hack the Box machine.
 
 Options:
 	-h               display this help message
@@ -69,6 +69,7 @@ OCTET_REGEX='(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])'
 IPV4_REGEX="^$OCTET_REGEX\.$OCTET_REGEX\.$OCTET_REGEX\.$OCTET_REGEX$"
 DEFAULT_THREADS="10"
 HTTP_REGEX='^.*80.*$'
+USER_AGENT="Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0"
 
 while getopts ":htubk:n:i:" opt; do
 	case ${opt} in
@@ -102,7 +103,9 @@ fi
 
 info "Creation Rep ./scans if not exist"
 [ ! -d ./scans ] && mkdir scans
+
 barre
+
 info "Start Full & Quick TCP Scan"
 if [ -e scans/full.nmap ]; then
 	info "[+] Check if file exist"
@@ -129,25 +132,21 @@ else
 fi
 result "Full TCP Scan Saved in .scans/full.nmap"
 ports=`grep "open" scans/full.nmap | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//` 
-if [ -z "$ports" ]; then
-	warning "no open tcp ports detected!"
-	error "Exiting"
-	exit 1
-else
+if ! [ -z "$ports" ]; then
 	result "Find Open Ports : $ports"
 	barre
 	info "Start Services Scan on TCP discovered port(s) : ${GREEN}$ports"
 	if [ "$RUN_TCP" -eq "1" ]; then
-	 	if [ -e "scans/nmap.xml" ]; then
+	 	if [ -e "scans/nmap-main.xml" ]; then
 	 		info "[+] Check if file exist"
-			command "ls -lh scans/nmap.xml"
-			result `ls -lh scans/nmap.xml | awk '{$1=$2=$3=$4=""; print $0}'`
+			command "ls -lh scans/nmap-main.xml"
+			result `ls -lh scans/nmap-main.xml | awk '{$1=$2=$3=$4=""; print $0}'`
 			warning "Services Scan File scans/nmap.xml already exist, rescan?"
 			select CHOIX in "${LISTE[@]}" ; do
 			    case $REPLY in
 			        1|y)
-						command "nmap -sC -sV -p$ports $IP -oA ./scans/nmap"
-						nmap -sC -sV -p$ports $IP -oA ./scans/nmap
+						command "nmap -sC -sV -p$ports $IP -oA ./scans/nmap-main"
+						nmap -sC -sV -p$ports $IP -oA ./scans/nmap-main
 						break
 						;;
 					2|n)
@@ -156,10 +155,10 @@ else
 			    esac
 			done
 	 	else	
-			command "nmap -sC -sV -p$ports $IP -oA ./scans/nmap"
-			nmap -sC -sV -p$ports $IP -oA ./scans/nmap
+			command "nmap -sC -sV -p$ports $IP -oA ./scans/nmap-main"
+			nmap -sC -sV -p$ports $IP -oA ./scans/nmap-main
 		fi
-		result "TCP Services Scan Saved in .scans/nmap.*"
+		result "TCP Services Scan Saved in .scans/nmap-main.*"
 	fi
 	# run udp scan
 	if [ "$RUN_UDP" -eq "1" ] && ! [ -f "scans/udp.out" ]; then
@@ -168,6 +167,10 @@ else
 		nmap -sU $IP -vv -oN scans/udp.xml
 		info "Scan UDP Save As ./scans/udp.out"
 	fi
+else
+	warning "no open tcp ports detected!"
+	error "Exiting"
+	exit 1
 fi
 
 #ports="22,80"
@@ -190,7 +193,7 @@ if [[ $ports =~ $HTTP_REGEX ]] || [ $ports = "80" ]; then
 						command "gobuster dir --url=http://$IP/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t $treads -o scans/gobuster-main.txt -x .php,.html,.txt"
 		        		wait "Gobuster Running"
 		        		gobuster dir --url=http://$IP/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt \
-		        		 -a "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0" \
+		        		 -a $USER_AGENT \
 		        		 -t $threads \
 		        		 -o scans/gobuster-main.txt \
 		        		 -x .php,.html,.txt -q
@@ -201,7 +204,7 @@ if [[ $ports =~ $HTTP_REGEX ]] || [ $ports = "80" ]; then
 						command "dirb http://$IP/ /usr/share/dirb/wordlists/common.txt -o scans/dirbuster-main.txt"
 						wait "Dirb Running"
 						dirb http://$IP/ /usr/share/dirb/wordlists/common.txt \
-						-a "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0" \
+						-a $USER_AGENT \
 						-o scans/dirbuster-main.txt
 					break
 					;;

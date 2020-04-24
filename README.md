@@ -4,7 +4,7 @@ Bash script for initial scans on HTB Machine
 
  - All HackTheBox Player know, the 1st part of enumeration is always the same.
 
- - I'm a IT guy, so I'm lazy.**
+ - I'm a IT guy, so I'm lazy.
 
  - This script with do all the 1st stuff for you. Juste run and wait...
 
@@ -27,7 +27,7 @@ Bash script for initial scans on HTB Machine
 
 ## Requirements
 
-* Bash / sh / zsh !!!
+* Bash in {a,c,Z,tc,k}sh / fish or what you want !!!
 * Nmap
 * [Gobuster](https://github.com/OJ/gobuster)
 * [Dirb](https://tools.kali.org/web-applications/dirb)
