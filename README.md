@@ -6,7 +6,7 @@ Bash script for initial scans on HTB Machine
 
  - I'm a IT guy, so I'm lazy.
 
- - This script with do all the 1st stuff for you. Juste run and wait...
+ - This script will do all the 1st stuff for you. Just run and wait...
 
  - Feel free to use, share, improve. Just let me know ^^
 
